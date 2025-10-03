@@ -1,23 +1,20 @@
 return {
-{
-  "stevearc/conform.nvim",
-  config = function()
-    local conform_opts = require("configs.conform")
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      local conform_opts = require("configs.conform")
 
-    require("conform").setup({
-      formatters_by_ft = conform_opts.formatters_by_ft,
-    })
+      require("conform").setup(conform_opts)
 
-
-    -- format on save
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = { "*.ts", "*.js", "*.json", "*.yaml", "*.yml", "*.go" },
-      callback = function(args)
-        conform_opts.format_on_save(args.buf)
-      end,
-    })
-  end,
-},
+      -- format on save
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = { "*.ts", "*.js", "*.json", "*.yaml", "*.yml", "*.go" },
+        callback = function(args)
+          conform_opts.format_on_save(args.buf)
+        end,
+      })
+    end,
+  },
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -87,19 +84,20 @@ return {
         },
       })
 
-      -- vim.lsp.config("yamlls", {
-      --   capabilities = capabilities,
-      --   settings = {
-      --     yaml = {
-      --       schemas = {
-              -- ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
-              -- ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.{yml,yaml}",
-              -- ["https://json.schemastore.org/k8s-1.21.json"] = "/*.k8s.{yml,yaml}",
-      --         ["https://json.schemastore.org/k8s-1.21.json"] = { "*.yaml", "*.yml" },
-      --       },
-      --     },
-      --   },
-      -- })
+    -- vim.lsp.config("yamlls", {
+    --   settings = {
+    --     yaml = {
+    --       customTags = {
+    --         "!Base64 scalar", "!Cidr scalar", "!Ref scalar",
+    --         "!!map", "!!seq", "!!str",
+    --         -- Helm template tags
+    --         "!helm", "!Sub", "!GetAtt", "!ImportValue"
+    --       },
+    --       schemas = require("schemastore").yaml.schemas(),
+    --       validate = true,
+    --     },
+    --   },
+    -- })
 
       -- 4) Bật (enable) các server đã register
       --    mason-lspconfig won't auto-enable because we set automatic_enable = false
@@ -148,7 +146,7 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
-      { "github/copilot.vim" }, -- copilot chính thức
+      { "github/copilot.vim" },
       { "nvim-lua/plenary.nvim" },
     },
     build = "make tiktoken", -- chỉ chạy nếu plugin yêu cầu
@@ -178,5 +176,12 @@ return {
       end, { desc = "Copilot Chat: Explain file" })
     end,
   },
+
+  -- Helm syntax
+  {
+    "towolf/vim-helm",
+    ft = { "helm", "yaml" },
+  },
+  { "towolf/vim-helm", ft = { "helm" } },
 
 }

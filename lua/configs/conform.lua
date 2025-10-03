@@ -5,16 +5,41 @@ M.formatters_by_ft = {
   typescript = { "prettier" },
   json       = { "prettier" },
   yaml       = { "prettier" },
-  go         = { "gofmt" },  -- bạn cũng có thể dùng "goimports"
+  helm       = { "yamlfmt" },  -- template/helm files -> yamlfmt
+  go         = { "gofmt" },
 }
 
 M.format_on_save = function(bufnr)
   require("conform").format({
     bufnr = bufnr,
-    lsp_fallback = true, -- nếu không có formatter thì dùng LSP
+    lsp_fallback = true,
     async = false,
     timeout_ms = 1000,
   })
 end
+
+M.formatters = {
+  yamlfmt = {
+    command = vim.fn.expand("~/go/bin/yamlfmt"),  -- hoặc "yamlfmt" nếu trong $PATH
+    args = {
+      "--in",
+      "--conf", vim.fn.expand("~/.config/yamlfmt.yaml"),
+      "-",   -- yamlfmt chấp nhận '-' để đọc stdin
+    },
+    stdin = true,
+  },
+
+  prettier = {
+    command = "/usr/local/node/node-v22.18.0-linux-x64/bin/prettier",
+    args = { "--stdin-filepath", "$FILENAME" },
+    stdin = true,
+  },
+
+  gofmt = {
+    command = "gofmt",
+    args = { "-s" },
+    stdin = true,
+  },
+}
 
 return M

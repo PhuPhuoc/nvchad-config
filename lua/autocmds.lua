@@ -9,9 +9,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.yaml", "*.yml", "*.tpl" },
-  callback = function(args)
-    require("configs.conform").format_on_save(args.buf)
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = { "*.yaml", "*.yml", "*.tpl" },
+--   callback = function(args)
+--     require("configs.conform").format_on_save(args.buf)
+--   end,
+-- })

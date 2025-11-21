@@ -185,22 +185,47 @@ return {
   { "towolf/vim-helm", ft = { "helm" } },
 
 
-{
-  "nvim-tree/nvim-tree.lua",
-  dependencies = "nvim-tree/nvim-web-devicons",
-  config = function()
-    require("nvim-tree").setup({
-      view = {
-        width = 45, -- 👈 chỉnh số cột ở đây (ví dụ 35)
-        side = "left",
-      },
-      actions = {
-        open_file = {
-          resize_window = true, -- tự động resize khi mở file
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("nvim-tree").setup({
+        view = {
+          width = 45, -- 👈 chỉnh số cột ở đây (ví dụ 35)
+          side = "left",
         },
-      },
-    })
-  end,
-},
+        actions = {
+          open_file = {
+            resize_window = true, -- tự động resize khi mở file
+          },
+        },
+      })
+    end,
+  },
+
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    opts = {
+      headings = { enabled = true },
+      code = { enabled = true },
+      inline = { enabled = true },
+      latex = { enabled = false },
+    },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
+
+
+  {
+    "someone-stole-my-name/yaml-companion.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = true,
+  }
 
 }

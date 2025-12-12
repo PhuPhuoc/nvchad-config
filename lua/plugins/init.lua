@@ -20,8 +20,20 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = {
+      -- ensure_installed = {
+      --   "typescript","javascript","go","yaml","json","dockerfile",
+      -- },
       ensure_installed = {
-        "typescript","javascript","go","yaml","json","dockerfile",
+        "go",
+        "gomod",
+        "gosum",
+        "gowork",
+        "lua",
+        "json",
+        "yaml",
+        "typescript",
+        "javascript",
+        "dockerfile",
       },
       highlight = { enable = true },
       indent = { enable = true },
@@ -104,7 +116,7 @@ return {
       --    Nếu bạn muốn, có thể chỉ enable các server thực sự đã cài.
       vim.schedule(function()
         -- list servers you ensured_installed earlier
-        vim.lsp.enable({ "gopls", "ts_ls", "jsonls", "yamlls" })
+        vim.lsp.enable({ "gopls", "lua_ls", "ts_ls", "jsonls", "yamlls" })
       end)
     end,
   },
@@ -194,6 +206,7 @@ return {
           width = 45, -- 👈 chỉnh số cột ở đây (ví dụ 35)
           side = "left",
         },
+        diagnostics = { enable = true },
         actions = {
           open_file = {
             resize_window = true, -- tự động resize khi mở file
@@ -203,29 +216,37 @@ return {
     end,
   },
 
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown" },
-    opts = {
-      headings = { enabled = true },
-      code = { enabled = true },
-      inline = { enabled = true },
-      latex = { enabled = false },
-    },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
+  -- {
+  --   "MeanderingProgrammer/render-markdown.nvim",
+  --   ft = { "markdown" },
+  --   opts = {
+  --     headings = { enabled = true },
+  --     code = { enabled = true },
+  --     inline = { enabled = true },
+  --     latex = { enabled = false },
+  --   },
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  -- },
 
 
-  {
-    "someone-stole-my-name/yaml-companion.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = true,
-  }
+  -- {
+  --   "someone-stole-my-name/yaml-companion.nvim",
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   config = true,
+  -- },
+
+  -- {
+  --   "akinsho/toggleterm.nvim",
+  --   version = "*",
+  --   config = function()
+  --     require("configs.toggleterm") -- Bạn sẽ tạo file config mới
+  --   end,
+  -- },
 
 }
